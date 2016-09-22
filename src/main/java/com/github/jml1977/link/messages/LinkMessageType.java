@@ -1,4 +1,4 @@
-package com.github.jml1977.link.net;
+package com.github.jml1977.link.messages;
 
 public enum LinkMessageType {
 	INVALID(0), ALIVE(1), RESPONSE(2), BYEBYE(3);

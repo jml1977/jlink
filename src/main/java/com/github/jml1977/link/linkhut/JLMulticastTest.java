@@ -2,7 +2,7 @@ package com.github.jml1977.link.linkhut;
 
 import java.net.InetSocketAddress;
 
-import com.github.jml1977.link.net.LinkPacketReader;
+import com.github.jml1977.link.messages.LinkPacketReader;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;

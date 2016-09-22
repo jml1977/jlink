@@ -1,4 +1,4 @@
-package com.github.jml1977.link.net;
+package com.github.jml1977.link.messages;
 
 import java.nio.ByteBuffer;
 
