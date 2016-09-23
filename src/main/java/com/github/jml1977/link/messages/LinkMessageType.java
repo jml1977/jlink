@@ -9,13 +9,13 @@ public enum LinkMessageType {
 		this.id = id;
 	}
 
-	public static LinkMessageType fromValue(int id) {
+	public static LinkMessageType fromValue(int id) throws InvalidLinkMessageException {
 		for (LinkMessageType mt : values()) {
 			if (mt.getId() == id) {
 				return mt;
 			}
 		}
-		throw new RuntimeException("Value not found in MessageType " + Integer.toString(id));
+		throw new InvalidLinkMessageException("Value not found in MessageType " + Integer.toString(id));
 	}
 
 	public int getId() {

@@ -2,6 +2,9 @@ package com.github.jml1977.link.linkhut;
 
 import java.net.InetSocketAddress;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.jml1977.link.messages.LinkPacketReader;
 
 import io.netty.bootstrap.Bootstrap;
@@ -16,6 +19,10 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.NetUtil;
 
 public class JLMulticastTest {
+	@SuppressWarnings("all") // shut-up Sonar about hard-coded IP
+	private final static String LINK_MULTICAST_GROUP = "224.76.78.75";
+
+	private static final Logger logger = LoggerFactory.getLogger(JLMulticastTest.class);
 
 	public static void main(String[] args) throws Exception {
 		EventLoopGroup grp = new NioEventLoopGroup();
@@ -36,11 +43,13 @@ public class JLMulticastTest {
 		b.option(ChannelOption.SO_REUSEADDR, true);
 		b.localAddress(20808);
 
-		String group = "224.76.78.75";
-		InetSocketAddress groupAddress = new InetSocketAddress(group, 20808);
+		InetSocketAddress groupAddress = new InetSocketAddress(LINK_MULTICAST_GROUP, 20808);
 
 		NioDatagramChannel c = (NioDatagramChannel) b.bind().sync().channel();
-		System.out.println(c);
+		logger.info(c.toString());
 		c.joinGroup(groupAddress, NetUtil.LOOPBACK_IF).sync();
+	}
+
+	private JLMulticastTest() {
 	}
 }

@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 
 public class LinkHeader {
 
-	public LinkHeader(ByteBuf bb) {
+	public LinkHeader(ByteBuf bb) throws InvalidLinkMessageException {
 		mt = LinkMessageType.fromValue(bb.readByte());
 		ttl = bb.readByte();
 		sessionGroupId = new LinkSessionGroupId(bb.readByte(), bb.readByte());

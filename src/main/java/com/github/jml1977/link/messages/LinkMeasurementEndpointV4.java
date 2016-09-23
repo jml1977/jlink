@@ -1,7 +1,9 @@
 package com.github.jml1977.link.messages;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 public class LinkMeasurementEndpointV4 {
 
@@ -22,8 +24,8 @@ public class LinkMeasurementEndpointV4 {
 	public String toString() {
 		try {
 			return "LMEPv4: " + InetAddress.getByAddress(inet) + ", " + port;
-		} catch (Exception ex) {
-			return "LMEPv4: " + inet.toString() + ", " + port;
+		} catch (UnknownHostException ex) {
+			return "LMEPv4: " + Arrays.toString(inet) + ", " + port;
 		}
 	}
 }

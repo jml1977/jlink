@@ -47,6 +47,9 @@ public class StateRunner extends Thread {
 			NioDatagramChannel c = (NioDatagramChannel) b.bind().sync().channel();
 			System.out.println(c);
 			c.joinGroup(groupAddress, NetUtil.LOOPBACK_IF).sync();
+			for (;;) {
+				Thread.sleep(100000);
+			}
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

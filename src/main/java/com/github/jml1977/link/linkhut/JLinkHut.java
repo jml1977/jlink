@@ -7,6 +7,7 @@ public class JLinkHut {
 		runner.start();
 		while (runner.isAlive()) {
 			System.out.println(state.link.clock().micros());
+//			Object timeline = state.link.captureAppTimeline();
 			Thread.sleep(10);
 		}
 		runner.join();

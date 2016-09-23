@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 public class LinkGHostTime {
 	public final static String KEY = "__gt";
-	public static final byte[] KEY_BYTES = KEY.getBytes();
+	protected static final byte[] KEY_BYTES = KEY.getBytes();
 
 	public LinkGHostTime(byte[] b) {
 		ByteBuffer buf = ByteBuffer.wrap(b);

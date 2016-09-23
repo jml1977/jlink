@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 public class LinkPrevGHostTime {
 	public final static String KEY = "_pgt";
-	public static final byte[] KEY_BYTES = KEY.getBytes();
+	protected static final byte[] KEY_BYTES = KEY.getBytes();
 
 	public LinkPrevGHostTime(byte[] b) {
 		ByteBuffer buf = ByteBuffer.wrap(b);

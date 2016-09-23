@@ -4,11 +4,11 @@ import io.netty.buffer.ByteBuf;
 
 public class LinkByeBye {
 
+	private final LinkHeader lh;
+
 	public LinkByeBye(final LinkHeader lh, ByteBuf bb) {
 		this.lh = lh;
 	}
-
-	private final LinkHeader lh;
 
 	@Override
 	public String toString() {
