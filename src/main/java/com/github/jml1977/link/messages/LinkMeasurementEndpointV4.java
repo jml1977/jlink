@@ -5,7 +5,11 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class LinkMeasurementEndpointV4 {
+	private static final Logger logger = LoggerFactory.getLogger(LinkMeasurementEndpointV4.class);
 
 	public LinkMeasurementEndpointV4(byte[] mep4) {
 		final ByteBuffer b = ByteBuffer.wrap(mep4);
@@ -25,6 +29,7 @@ public class LinkMeasurementEndpointV4 {
 		try {
 			return "LMEPv4: " + InetAddress.getByAddress(inet) + ", " + port;
 		} catch (UnknownHostException ex) {
+			logger.info("Unable to resolve address for " + Arrays.toString(inet), ex);
 			return "LMEPv4: " + Arrays.toString(inet) + ", " + port;
 		}
 	}
