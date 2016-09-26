@@ -15,8 +15,12 @@ public class Tempo {
 		return this.bpm;
 	}
 
-	public long asLong() {
-		return (long)(60.0 * 1e6 / bpm);
+	public long microsPerBeat() {
+		return (long) (60.0 * 1e6 / bpm);
+	}
+
+	public Beats microsToBeats(long micros) {
+		return new Beats((micros / (double) (microsPerBeat())));
 	}
 
 	@Override

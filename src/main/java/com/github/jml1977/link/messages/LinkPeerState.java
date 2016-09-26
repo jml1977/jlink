@@ -24,13 +24,13 @@ public class LinkPeerState {
 		byte[] mep4Value = new byte[mep4Size];
 		bb.readBytes(mep4Value);
 
-		ltl = new LinkTimeLine(tmlnValue);
+		ltl = new LinkTimeline(tmlnValue);
 		ls = new LinkSession(sessValue);
 		lmev4 = new LinkMeasurementEndpointV4(mep4Value);
 	}
 
 	private final LinkHeader lh;
-	private final LinkTimeLine ltl;
+	private final LinkTimeline ltl;
 	private final LinkSession ls;
 	private final LinkMeasurementEndpointV4 lmev4;
 
