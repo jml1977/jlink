@@ -29,9 +29,13 @@ public class LinkTimeline {
 		beatOrigin = beats;
 		timeOrigin = origin;
 	}
-	
+
 	public Beats toBeats(long time) {
 		return beatOrigin.add(tempo.microsToBeats(time - timeOrigin));
+	}
+
+	public long fromBeats(Beats beats) {
+		return timeOrigin + tempo.beatsToMicros(beats.subtract(beatOrigin));
 	}
 
 	public Beats getBeatOrigin() {

@@ -20,6 +20,10 @@ public class Beats {
 	public Beats add(Beats rhs) {
 		return new Beats(microbeats() + rhs.microbeats());
 	}
+	
+	public Beats subtract(Beats rhs) {
+		return new Beats(microbeats() - rhs.microbeats());
+	}
 
 	private final long microbeats;
 

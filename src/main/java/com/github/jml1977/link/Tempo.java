@@ -23,6 +23,10 @@ public class Tempo {
 		return new Beats((micros / (double) (microsPerBeat())));
 	}
 
+	public long beatsToMicros(Beats beats) {
+		return Math.round(beats.floating() * microsPerBeat());
+	}
+
 	@Override
 	public String toString() {
 		return "Tempo: " + Double.toString(asBpm());
