@@ -8,4 +8,8 @@ public class GhostXForm {
 
 	private final double slope;
 	private final long intercept;
+
+	public long ghostToHost(long ghostTime) {
+		return (long) ((ghostTime - intercept) / slope);
+	}
 }

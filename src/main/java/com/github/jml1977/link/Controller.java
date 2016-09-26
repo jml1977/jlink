@@ -27,9 +27,12 @@ public class Controller {
 		this.enabled = false;
 		this.myNodeId = LinkNodeId.random();
 		this.sessionId = this.myNodeId;
-		this.timeLine = clampTempo(new LinkTimeLine(this.tempo, 0, 0));
+		this.sessionTimeline = clampTempo(new LinkTimeLine(this.tempo, 0, 0));
 		this.ghostXForm = initXForm(this.clock);
+		this.clientTimeline = new LinkTimeLine(sessionTimeline.getTempo(), 0, ghostXForm.ghostToHost(0));
 	}
+
+	private LinkTimeLine clientTimeline;
 
 	private GhostXForm initXForm(Clock clock) {
 		return new GhostXForm(-1.0, -clock.micros());
@@ -44,7 +47,7 @@ public class Controller {
 		return new LinkTimeLine(newTempo, timeline.getBeatOrigin(), timeline.getTimeOrigin());
 	}
 
-	private LinkTimeLine timeLine;
+	private LinkTimeLine sessionTimeline;
 
 	public boolean isEnabled() {
 		return enabled;
