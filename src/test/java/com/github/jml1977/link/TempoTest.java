@@ -7,14 +7,28 @@ import com.github.jml1977.link.messages.LinkTimeline;
 
 public class TempoTest {
 	@Test
-	public void testToBeats() {
-		LinkTimeline ltl = new LinkTimeline(new Tempo(60.), new Beats(-1.0), 1000000);
-		Assert.assertEquals(new Beats(2.5), ltl.toBeats(4500000));
+	public void ConstructFromBpm() {
+		Tempo t = new Tempo(120.0);
+		Assert.assertEquals(120., t.asBpm(), 0.01);
+		Assert.assertEquals(500000, t.microsPerBeat());
 	}
-
+	
 	@Test
-	public void testFromBeats() {
-		LinkTimeline ltl = new LinkTimeline(new Tempo(60.), new Beats(-1.0), 1000000);
-		Assert.assertEquals(5200000, ltl.fromBeats(new Beats(3.2)));
+	public void ConstructFromMicros() {
+		Tempo t = new Tempo(500000);
+		Assert.assertEquals(120., t.asBpm(), 0.01);
+		Assert.assertEquals(500000, t.microsPerBeat());
+	}
+	
+	@Test
+	public void MicrosToBeats() {
+		Tempo t = new Tempo(120.0);
+		Assert.assertEquals(new Beats(2.0), t.microsToBeats(1000000));
+	}
+	
+	@Test
+	public void BeatsToMicros() {
+		Tempo t = new Tempo(120.0);
+		Assert.assertEquals(1000000, t.beatsToMicros(new Beats(2.)));
 	}
 }
