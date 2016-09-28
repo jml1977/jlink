@@ -11,15 +11,18 @@ import com.github.jml1977.link.messages.LinkTimeline;
 
 public class PhaseTest {
 	private LinkTimeline tl0;
+	private LinkTimeline tl1;
 
 	final private Beats zero = new Beats(0.0);
 	final private Beats one = new Beats(1.0);
 	final private Beats two = new Beats(2.0);
-	final private Beats three = new Beats(2.0);
+	final private Beats three = new Beats(3.0);
+	final private Beats four = new Beats(4.0);
 
 	@Before
 	public void setUp() {
 		tl0 = new LinkTimeline(new Tempo(120.), one, 0);
+		tl1 = new LinkTimeline(new Tempo(60.), new Beats(-9.5), 2000000);
 	}
 
 	@Test
@@ -69,6 +72,34 @@ public class PhaseTest {
 		assertEquals(Phase.nextPhaseMatch(new Beats(2.3), new Beats(-0.1), two), new Beats(3.9));
 		assertEquals(Phase.nextPhaseMatch(new Beats(-9.5), new Beats(0.1), two), new Beats(-7.9));
 		assertEquals(Phase.nextPhaseMatch(new Beats(-2.3), new Beats(0.1), new Beats(9.5)), new Beats(0.1));
+	}
+
+	@Test
+	public void toPhaseEncodedBeatsZero() {
+		long t0 = 0;
+		long t1 = 2000000;
+		long t2 = -3200000;
+		assertEquals(Phase.toPhaseEncodedBeats(tl1, t0, zero), tl1.toBeats(t0));
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, t1, zero), tl0.toBeats(t1));
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, t2, zero), tl0.toBeats(t2));
+	}
+
+	@Test
+	public void toPhaseEncodedBeatsNear() {
+		long sec = 1000000;
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, sec, new Beats(2.2)), two);
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, sec, new Beats(1.8)), new Beats(3.8));
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, sec, two), two);
+	}
+
+	@Test
+	public void toPhaseEncodedBeatsSample() {
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, -2000000, four), new Beats(0.).subtract(new Beats(4.)));
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, -3000000, four), new Beats(-6.0));
+		assertEquals(Phase.toPhaseEncodedBeats(tl0, 3200000, three), new Beats(6.4));
+		assertEquals(Phase.toPhaseEncodedBeats(tl1, 0, three), new Beats(-11.0));
+		assertEquals(Phase.toPhaseEncodedBeats(tl1, 1500000, new Beats(2.4)), new Beats(-10.1));
+
 	}
 
 }
