@@ -13,7 +13,7 @@ public class Phase {
 		return nextPhaseMatch(x.subtract(new Beats(0.5 * quantum.floating())), target, quantum);
 	}
 
-	private static Beats nextPhaseMatch(final Beats x, final Beats target, final Beats quantum) {
+	public static Beats nextPhaseMatch(final Beats x, final Beats target, final Beats quantum) {
 		Beats desiredPhase = phase(target, quantum);
 		Beats xPhase = phase(x, quantum);
 		Beats phaseDiff = desiredPhase.subtract(xPhase).add(quantum).mod(quantum);
