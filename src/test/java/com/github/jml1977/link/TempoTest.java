@@ -3,8 +3,6 @@ package com.github.jml1977.link;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.jml1977.link.messages.LinkTimeline;
-
 public class TempoTest {
 	@Test
 	public void ConstructFromBpm() {

@@ -29,6 +29,6 @@ public class Tempo {
 
 	@Override
 	public String toString() {
-		return "Tempo: " + Double.toString(asBpm());
+		return "Tempo: " + Double.toString(asBpm()) + "bpm";
 	}
 }

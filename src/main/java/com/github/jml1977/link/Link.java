@@ -1,5 +1,7 @@
 package com.github.jml1977.link;
 
+import com.github.jml1977.link.messages.LinkTimeline;
+
 public class Link {
 	private Clock clock;
 
@@ -51,5 +53,13 @@ public class Link {
 		synchronized (mutex) {
 			this.tempoCallback = tc;
 		}
+	}
+
+	public int numPeers() {
+		return 0;
+	}
+
+	public AppTimeline captureAppTimeline() {
+		return new AppTimeline(controller.timeline(), numPeers() > 0);
 	}
 }

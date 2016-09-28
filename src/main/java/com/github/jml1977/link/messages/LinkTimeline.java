@@ -38,11 +38,11 @@ public class LinkTimeline {
 		return timeOrigin + tempo.beatsToMicros(beats.subtract(beatOrigin));
 	}
 
-	public Beats getBeatOrigin() {
+	public Beats beatOrigin() {
 		return this.beatOrigin;
 	}
 
-	public Tempo getTempo() {
+	public Tempo tempo() {
 		return this.tempo;
 	}
 

@@ -30,7 +30,7 @@ public class Controller {
 		this.sessionId = this.nodeId;
 		this.sessionTimeline = clampTempo(new LinkTimeline(this.tempo, new Beats(0), 0));
 		this.ghostXForm = initXForm(this.clock);
-		this.clientTimeline = new LinkTimeline(sessionTimeline.getTempo(), new Beats(0), ghostXForm.ghostToHost(0));
+		this.clientTimeline = new LinkTimeline(sessionTimeline.tempo(), new Beats(0), ghostXForm.ghostToHost(0));
 
 		this.discovery = new Discovery(new NodeState(nodeId, sessionId, sessionTimeline), ghostXForm, null /* GatewayFactory */,
 				null /* UdpExceptionHandler */);
@@ -46,10 +46,10 @@ public class Controller {
 	private LinkTimeline clampTempo(LinkTimeline timeline) {
 		final double minBPM = 20.0;
 		final double maxBPM = 999.0;
-		final double currentBpm = timeline.getTempo().asBpm();
+		final double currentBpm = timeline.tempo().asBpm();
 		final double bpm = Math.min(Math.max(currentBpm, minBPM), maxBPM);
 		Tempo newTempo = new Tempo(bpm);
-		return new LinkTimeline(newTempo, timeline.getBeatOrigin(), timeline.getTimeOrigin());
+		return new LinkTimeline(newTempo, timeline.beatOrigin(), timeline.getTimeOrigin());
 	}
 
 	private LinkTimeline sessionTimeline;
@@ -71,5 +71,13 @@ public class Controller {
 	private void resetState() {
 		nodeId = LinkNodeId.random();
 		sessionId = nodeId;
+	}
+
+	private Object clientTimelineMutex = new Object();
+
+	public LinkTimeline timeline() {
+		synchronized (clientTimelineMutex) {
+			return clientTimeline;
+		}
 	}
 }
