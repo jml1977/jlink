@@ -5,17 +5,24 @@ import com.github.jml1977.link.messages.LinkTimeline;
 import com.github.jml1977.link.net.Discovery;
 
 public class Controller {
+	private LinkTimeline clientTimeline;
+
+	private Object clientTimelineMutex = new Object();
+
 	private Clock clock;
 
+	private Discovery discovery;
 	private boolean enabled;
-
-	private final PeerCountCallback peerCountCallback;
-
-	private LinkNodeId nodeId;
-	private LinkNodeId sessionId;
 
 	private GhostXForm ghostXForm;
 
+	private LinkNodeId nodeId;
+
+	private final PeerCountCallback peerCountCallback;
+
+	private LinkNodeId sessionId;
+
+	private LinkTimeline sessionTimeline;
 	private Tempo tempo;
 
 	private final TempoCallback tempoCallback;
@@ -36,13 +43,6 @@ public class Controller {
 				null /* UdpExceptionHandler */);
 	}
 
-	private Discovery discovery;
-	private LinkTimeline clientTimeline;
-
-	private GhostXForm initXForm(Clock clock) {
-		return new GhostXForm(-1.0, -clock.micros());
-	}
-
 	private LinkTimeline clampTempo(LinkTimeline timeline) {
 		final double minBPM = 20.0;
 		final double maxBPM = 999.0;
@@ -52,10 +52,17 @@ public class Controller {
 		return new LinkTimeline(newTempo, timeline.beatOrigin(), timeline.getTimeOrigin());
 	}
 
-	private LinkTimeline sessionTimeline;
+	private GhostXForm initXForm(Clock clock) {
+		return new GhostXForm(-1.0, -clock.micros());
+	}
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	private void resetState() {
+		nodeId = LinkNodeId.random();
+		sessionId = nodeId;
 	}
 
 	public void setEnabled(boolean newEnabled) {
@@ -67,13 +74,6 @@ public class Controller {
 			discovery.setEnabled(newEnabled);
 		}
 	}
-
-	private void resetState() {
-		nodeId = LinkNodeId.random();
-		sessionId = nodeId;
-	}
-
-	private Object clientTimelineMutex = new Object();
 
 	public LinkTimeline timeline() {
 		synchronized (clientTimelineMutex) {

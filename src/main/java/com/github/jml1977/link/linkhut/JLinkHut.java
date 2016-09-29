@@ -21,7 +21,7 @@ public class JLinkHut {
 		double phase = timeline.phaseAtTime(time, quantum);
 		System.out.print("peers: " + numPeers + " | quantum: " + quantum + " | tempo: " + timeline.tempo() + " | beats: " + beats + " | ");
 		for (int i = 0; i < Math.ceil(quantum); i++) {
-			if(i < phase) {
+			if (i < phase) {
 				System.out.print('X');
 			} else {
 				System.out.print('O');

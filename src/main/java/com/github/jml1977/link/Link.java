@@ -1,7 +1,5 @@
 package com.github.jml1977.link;
 
-import com.github.jml1977.link.messages.LinkTimeline;
-
 public class Link {
 	private Clock clock;
 
