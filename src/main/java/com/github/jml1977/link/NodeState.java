@@ -17,4 +17,8 @@ public class NodeState {
 		this.timeline = timeline;
 	}
 
+	public LinkNodeId ident() {
+		return this.nodeId;
+	}
+
 }
