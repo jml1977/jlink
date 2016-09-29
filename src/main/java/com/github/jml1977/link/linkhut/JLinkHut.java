@@ -1,8 +1,6 @@
 package com.github.jml1977.link.linkhut;
 
 import com.github.jml1977.link.AppTimeline;
-import com.github.jml1977.link.Beats;
-import com.github.jml1977.link.Phase;
 
 public class JLinkHut {
 	public static void main(String[] args) throws Exception {
@@ -21,7 +19,7 @@ public class JLinkHut {
 	private static void printState(long time, AppTimeline timeline, int numPeers, double quantum) {
 		double beats = timeline.beatAtTime(time, quantum);
 		double phase = timeline.phaseAtTime(time, quantum);
-		System.out.print("peers: " + numPeers + " | quantum: " + quantum + " | " + timeline.tempo() + " | " + beats + " | ");
+		System.out.print("peers: " + numPeers + " | quantum: " + quantum + " | tempo: " + timeline.tempo() + " | beats: " + beats + " | ");
 		for (int i = 0; i < Math.ceil(quantum); i++) {
 			if(i < phase) {
 				System.out.print('X');
