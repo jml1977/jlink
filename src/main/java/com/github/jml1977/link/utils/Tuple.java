@@ -16,4 +16,9 @@ public class Tuple<First, Second> {
 	public final Second second() {
 		return s;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + ":(" + first().toString() + "," + second().toString() + ")";
+	}
 }

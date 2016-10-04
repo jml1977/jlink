@@ -55,13 +55,20 @@ public class StateRunner extends Thread {
 
 	private void scheduleNextPruning() {
 		if (!peerTimeouts.isEmpty()) {
-			long schedulingTime = peerTimeouts.peek().first() + 1000000 - Clock.now();
-			timer.schedule(() -> pruneExpiredPeers(), schedulingTime, TimeUnit.MILLISECONDS);
+			final long schedulingTime = peerTimeouts.peek().first() + 1000000 - Clock.now();
+			timer.schedule(() -> pruneExpiredPeers(), schedulingTime, TimeUnit.MICROSECONDS);
 		}
 	}
 
 	private void pruneExpiredPeers() {
 		System.out.println("pruneExpiredPeers");
+		final long now = Clock.now();
+		final boolean removed = peerTimeouts.removeIf(t -> t.first() < now);
+		if (removed) {
+			// System.out.println("Removed items: current size = " +
+			// peerTimeouts.size());
+		}
+		scheduleNextPruning();
 	}
 
 	private void sawPeer(LinkPeerState state) {
