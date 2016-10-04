@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
 public class LinkPacketReader {
 	private static final Logger logger = LoggerFactory.getLogger(LinkPacketReader.class);
 
-	public LinkPacketReader(ByteBuf bb) throws InvalidLinkMessageException {
+	public Object read() throws InvalidLinkMessageException {
 		bb.readerIndex(0);
 		final byte[] protocol = new byte[7];
 		bb.readBytes(protocol);
@@ -23,34 +23,52 @@ public class LinkPacketReader {
 		LinkHeader lh = new LinkHeader(bb);
 		switch (lh.getMessageType()) {
 		case ALIVE:
-			handleAlive(lh, bb);
-			break;
+			return handleAlive(lh, bb);
 		case RESPONSE:
-			handleResponse(lh, bb);
-			break;
+			return handleResponse(lh, bb);
 		case BYEBYE:
-			handleByeBye(lh, bb);
-			break;
+			return handleByeBye(lh, bb);
 		case INVALID:
-			break;
+			logger.warn("Invalid reponse message type: {}", lh.getMessageType());
+			return null;
 		default:
 			logger.warn("Unknown message type: {}", lh.getMessageType());
+			return null;
 		}
 	}
 
-	private void handleAlive(LinkHeader lh, ByteBuf bb) {
+	private ByteBuf bb;
+
+	public LinkPacketReader(ByteBuf bb) {
+		this.bb = bb;
+		this.bb.retain();
+	}
+
+	@Override
+	public void finalize() {
+		if (bb != null) {
+			bb.release();
+		}
+	}
+
+	private LinkPeerState handleAlive(LinkHeader lh, ByteBuf bb) {
 		logger.info("handleAlive");
 		LinkPeerState lps = new LinkPeerState(lh, bb);
 		logger.info(lps.toString());
+		return lps;
 	}
 
-	private void handleByeBye(LinkHeader lh, ByteBuf bb) {
+	private LinkByeBye handleByeBye(LinkHeader lh, ByteBuf bb) {
 		logger.info("handleByeBye");
-		LinkByeBye lbb = new LinkByeBye(lh, bb);
+		LinkByeBye lbb = new LinkByeBye(lh);
 		logger.info(lbb.toString());
+		return lbb;
 	}
 
-	private void handleResponse(LinkHeader lh, ByteBuf bb) {
-		// TODO
+	private LinkResponse handleResponse(LinkHeader lh, ByteBuf bb) {
+		logger.info("handleResponse");
+		LinkResponse lr = new LinkResponse(lh);
+		logger.info(lr.toString());
+		return lr;
 	}
 }

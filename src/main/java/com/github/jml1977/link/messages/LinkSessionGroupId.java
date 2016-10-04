@@ -8,12 +8,23 @@ public class LinkSessionGroupId {
 
 	private final int groupId;
 
-	public int getGroupId() {
-		return this.groupId;
+	public LinkSessionGroupId(int groupId) {
+		this.groupId = groupId;
 	}
+
+	// public int getGroupId() {
+	// return this.groupId;
+	// }
 
 	@Override
 	public String toString() {
 		return "LinkSessionGroupId: " + Integer.toString(groupId);
+	}
+
+	public byte[] toNetworkBytes() {
+		byte[] b = new byte[2];
+		b[0] = (byte) (groupId >> 8);
+		b[1] = (byte) (groupId & 0xFF);
+		return b;
 	}
 }

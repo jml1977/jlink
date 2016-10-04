@@ -36,6 +36,8 @@ public class JLMulticastTest {
 			protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
 				ByteBuf bb = msg.content();
 				LinkPacketReader lpr = new LinkPacketReader(bb);
+				Object response = lpr.read();
+				logger.debug(response.toString());
 			}
 
 		});

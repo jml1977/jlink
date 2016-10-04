@@ -28,6 +28,14 @@ public class LinkPeerState {
 		ls = new LinkSession(sessValue);
 		lmev4 = new LinkMeasurementEndpointV4(mep4Value);
 	}
+	
+	public int ttl() {
+		return lh.ttl();
+	}
+
+	public LinkNodeId ident() {
+		return lh.ident();
+	}
 
 	private final LinkHeader lh;
 	private final LinkTimeline ltl;
@@ -36,7 +44,6 @@ public class LinkPeerState {
 
 	@Override
 	public String toString() {
-		return lh.toString() + "\n LinkPeerState:\n  " + ltl.toString() + "\n  " + ls.toString() + "\n  "
-				+ lmev4.toString();
+		return lh.toString() + "\n LinkPeerState:\n  " + ltl.toString() + "\n  " + ls.toString() + "\n  " + lmev4.toString();
 	}
 }

@@ -7,7 +7,7 @@ public class Clock {
 		return now() - startTime;
 	}
 
-	private static long now() {
+	public static long now() {
 		return System.nanoTime() / 1000;
 	}
 }

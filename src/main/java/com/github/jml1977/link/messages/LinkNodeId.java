@@ -2,6 +2,8 @@ package com.github.jml1977.link.messages;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.github.jml1977.link.Beats;
+
 public class LinkNodeId {
 	public LinkNodeId(byte[] id) {
 		this.id = id;
@@ -23,8 +25,33 @@ public class LinkNodeId {
 		return this.id;
 	}
 
+	public String ident() {
+		return this.stringFormat;
+	}
+
 	@Override
 	public String toString() {
 		return "LinkNodeId: " + stringFormat;
+	}
+
+	public byte[] toNetworkBytes() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof LinkNodeId)) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		LinkNodeId rhs = (LinkNodeId) obj;
+		return stringFormat.equals(rhs.stringFormat);
+	}
+
+	@Override
+	public int hashCode() {
+		return ("LNI" + stringFormat).hashCode();
 	}
 }
